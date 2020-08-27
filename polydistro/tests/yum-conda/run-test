@@ -1,0 +1,4 @@
+#!/bin/bash -x
+yum install -y conda
+# need to re-enter shell to pick up conda shell enhancements
+bash --login ./subtest

@@ -1,0 +1,6 @@
+#!/bin/bash -x
+bash ./miniconda-install.sh -b
+PREFIX=/root/miniconda3
+$PREFIX/bin/conda config --add channels conda-forge
+$PREFIX/bin/conda install -y tskit
+$PREFIX/bin/tskit --version

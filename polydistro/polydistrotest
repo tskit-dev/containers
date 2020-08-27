@@ -1,0 +1,35 @@
+#!/bin/bash
+
+echo $0 start
+cd "$(dirname "$0")"
+
+MINICONDA=tests/miniconda/miniconda-install.sh 
+if [[ ! -e $MINICONDA ]]; then
+    curl -o $MINCONDA \
+        https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+fi
+
+for DISTRO in distros/*; do
+    source $DISTRO/test-settings.env
+    for TEST in ${TESTS[@]}; do
+        mkdir -p $DISTRO/status
+        STATUS="$DISTRO/status/$TEST"
+        if [[ ! -e $STATUS ]]; then
+            echo Running $TEST on $IMAGE
+            echo RUNNING > $STATUS
+            if podman run --rm \
+                    --volume ./tests/:/mnt/:Z \
+                    --workdir /mnt/$TEST/ \
+                    $IMAGE \
+                    ./run-test
+            then
+                echo PASS > $STATUS
+            else
+                echo FAIL > $STATUS
+            fi
+        fi
+        echo $(cat $STATUS): $TEST on $IMAGE
+    done
+done
+
+echo $0 done
