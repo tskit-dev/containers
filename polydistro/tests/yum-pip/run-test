@@ -1,4 +1,0 @@
-#!/bin/bash -x
-yum -y install python3-pip || yum -y install python36-pip
-python3 -m pip install tskit
-tskit --version
