@@ -1,0 +1,6 @@
+#!/bin/bash -x
+conda config --add channels conda-forge
+conda create -y --name testenv
+conda activate testenv
+conda install -y msprime
+../_common/smoke-test-msp

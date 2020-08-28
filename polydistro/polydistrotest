@@ -16,7 +16,9 @@ for DISTRO in distros/*; do
         STATUS="$DISTRO/status/$TEST"
         if [[ ! -e $STATUS ]]; then
             echo Testing $TEST on $IMAGE
-            if podman run --rm \
+            CNAME="$(basename $DISTRO)-testing-container"
+            if podman run \
+                    --name $CNAME \
                     --volume ./tests/:/mnt/:Z \
                     --workdir /mnt/$TEST/ \
                     --env TAXON=$TAXON \
@@ -24,8 +26,10 @@ for DISTRO in distros/*; do
                     ./run-test
             then
                 echo PASS > $STATUS
+                podman rm $CNAME
             else
                 echo FAIL > $STATUS
+                echo FAIL! $TEST in $CNAME
             fi
         fi
         echo $(cat $STATUS): $TEST on $IMAGE

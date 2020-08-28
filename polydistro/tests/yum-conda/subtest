@@ -1,6 +1,0 @@
-#!/bin/bash -x
-conda create -y --name testenv
-conda activate testenv
-conda config --add channels conda-forge
-conda install -y tskit
-tskit --version
