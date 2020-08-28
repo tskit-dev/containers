@@ -15,11 +15,11 @@ for DISTRO in distros/*; do
         mkdir -p $DISTRO/status
         STATUS="$DISTRO/status/$TEST"
         if [[ ! -e $STATUS ]]; then
-            echo Running $TEST on $IMAGE
-            echo RUNNING > $STATUS
+            echo Testing $TEST on $IMAGE
             if podman run --rm \
                     --volume ./tests/:/mnt/:Z \
                     --workdir /mnt/$TEST/ \
+                    --env TAXON=$TAXON \
                     $IMAGE \
                     ./run-test
             then

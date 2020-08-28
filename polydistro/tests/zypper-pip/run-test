@@ -1,4 +1,0 @@
-#!/bin/bash -x
-zypper install -y python3-pip
-pip3 install tskit
-tskit --version

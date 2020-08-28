@@ -1,0 +1,2 @@
+#!/bin/bash -x
+zypper install -y python3-pip python3-devel gcc gsl-devel
