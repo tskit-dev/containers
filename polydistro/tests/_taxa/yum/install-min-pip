@@ -2,7 +2,7 @@
 yum -y install python3-pip
 yum -y install python3-devel gsl-devel gcc
 # min-pip test is to install as little as possible via pip
-yum -y install \
+yum -y --skip-broken install \
   python3-numcodecs \
   python3-pyrsistent \
   python3-asciitree \
