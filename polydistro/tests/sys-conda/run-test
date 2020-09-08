@@ -1,0 +1,4 @@
+#!/bin/bash -x
+../_taxa/$TAXON/install-conda
+# enter interactive shell to pick up conda shell hooks
+bash -i ../_common/conda-install-test-msp

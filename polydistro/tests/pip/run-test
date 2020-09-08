@@ -1,0 +1,4 @@
+#!/bin/bash -x
+../_taxa/$TAXON/install-pip-gsl
+python3 -m pip install msprime
+../_common/smoke-test-msp

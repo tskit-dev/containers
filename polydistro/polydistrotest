@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo $0 start
+cd "$(dirname "$0")"
+
+MINICONDA=tests/miniconda/miniconda-install.sh 
+if [[ ! -e $MINICONDA ]]; then
+    curl -o $MINCONDA \
+        https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+fi
+
+for DISTRO in distros/*; do
+    source $DISTRO/test-settings.env
+    for TEST in ${TESTS[@]}; do
+        mkdir -p $DISTRO/status
+        STATUS="$DISTRO/status/$TEST"
+        if [[ ! -e $STATUS ]]; then
+            echo Testing $TEST on $IMAGE
+            CNAME="$(basename $DISTRO)-testing-container"
+            if podman run \
+                    --name $CNAME \
+                    --volume ./tests/:/mnt/:Z \
+                    --workdir /mnt/$TEST/ \
+                    --env TAXON=$TAXON \
+                    $IMAGE \
+                    ./run-test
+            then
+                echo PASS > $STATUS
+                podman rm $CNAME
+            else
+                echo FAIL > $STATUS
+                echo FAIL! $TEST in $CNAME
+            fi
+        fi
+        echo $(cat $STATUS): $TEST on $IMAGE
+    done
+done
+
+echo $0 done
