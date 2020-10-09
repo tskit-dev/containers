@@ -1,0 +1,4 @@
+#!/bin/bash
+useradd --create-home --user-group --uid $1 $2
+usermod -a -G sudo $2
+passwd -d $2 # no password

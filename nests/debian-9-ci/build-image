@@ -1,0 +1,11 @@
+#!/bin/bash
+set -o errexit
+
+REPOSITORY=docker.io/castedo/tskit-nests
+MSPRIME=~/src/msprime
+# ~/src/msprime is git clone of github.com:tskit-dev/msprime.git
+
+buildah bud --layers \
+    --volume $MSPRIME:/opt/msprime:ro,Z \
+    --tag $REPOSITORY:debian-9-ci .
+
