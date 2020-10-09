@@ -1,0 +1,7 @@
+#!/bin/bash
+set -o errexit
+
+REPOSITORY=docker.io/castedo/tskit-nests
+
+buildah bud --layers -t $REPOSITORY:ubuntu-18.04 .
+
