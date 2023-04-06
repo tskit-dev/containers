@@ -16,6 +16,22 @@ a few others for convenience.
 podman build . -t tskit_dev
 ```
 
+#### Note
+
+If you get errors such as:
+
+```
+cannot apply additional memory protection after relocation: Permission denied
+```
+
+Execute:
+
+```sh
+sudo setenforce 0
+```
+
+Then proceed with `podman build ...`.
+
 ### Create a shell environment
 
 ```sh
